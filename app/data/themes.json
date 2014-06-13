@@ -1,0 +1,16 @@
+{
+    "currentKey": "DARK",
+    "themes": [
+         {
+            "name": "Dark Theme",
+            "key": "DARK",
+			"label": "Dark Theme",
+			"href": "css/bundle.css"
+         },{
+            "name": "Light Theme",
+            "key": "LIGHT",
+			"label": "Light Theme",
+			"href": "css/bundle-light.css"
+         }
+    ]
+}

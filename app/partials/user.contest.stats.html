@@ -1,0 +1,118 @@
+<div class="panel panel-custom panelContestStat">
+    <div data-ng-show="isContestStarted(contest.phaseData) === 0">
+        <div class="panel-heading">
+            Contest Overview
+        </div>
+        <div class="panel-body">
+            <div class="overview">
+                <div>
+                    <div class="column">
+                        <span>Contest Organizer</span>
+                    </div><!-- 
+                    avoid unnecessary blank
+                    --><div class="column">
+                    <span class="textWhite"><span class="hidden-xs">:&nbsp;</span>{{ organizer }}</span><span class="textWhite" data-ng-show="isMeOrganizer">&nbsp;(Me)</span>
+                </div>
+                </div>
+                <div>
+                    <div class="column">
+                        <span>Difficulty Level</span>
+                    </div><!-- 
+                    avoid unnecessary blank
+                    --><div class="column">
+                    <span class="textWhite"><span class="hidden-xs">:&nbsp;</span>{{ difficulty }}</span>
+                </div>
+                </div>
+                <div>
+                    <div class="column">
+                        <span>Languages Allowed</span>
+                    </div><!-- 
+                    avoid unnecessary blank
+                    --><div class="column">
+                    <span class="textWhite"><span class="hidden-xs">:&nbsp;</span>{{ languages }}</span>
+                </div>
+                </div>
+                <div>
+                    <div class="column">
+                        <span>Registrants </span>
+                    </div><!-- 
+                    avoid unnecessary blank
+                    --><div class="column">
+                    <span class="textWhite"><span class="hidden-xs">:&nbsp;</span><a>{{ registrants }}</a></span>
+                </div>
+                </div>
+            </div>
+            <div class="schedule">
+                <header class="textWhite">Contest Schedule</header>
+                <div data-ng-repeat="phase in contest.phases"
+                     data-ng-init="time0=getPhaseTime(phase, 0); time1=getPhaseTime(phase, 1);" class="details"  data-ng-class="{singleLine: !time1.value}">
+                    <div class="column">
+                        <span class="title">{{ phase.title }}</span>
+                    </div><!-- 
+                    avoid unnecessary blank
+                    --><div class="column">
+                    <span data-ng-show="time0.key" class="startIn textWhite">{{ time0.key }} In</span><!--
+                        avoid unnecessary blank
+                        --><span class="startTime textWhite" data-ng-show="time0.value">:&nbsp;{{ time0.value }}</span><!-- 
+                        avoid unnecessary blank
+                        --><br data-ng-show="time1.value"/><!-- 
+                        avoid unnecessary blank
+                        --><span data-ng-show="time1.key" class="endIn textWhite">{{ time1.key }} In</span><!-- 
+                        avoid unnecessary blank
+                        --><span class="endTime textWhite" data-ng-show="time1.value">:&nbsp;{{ time1.value }}</span>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of content for non-ongoing contest -->
+    <div data-ng-show="isContestStarted(contest.phaseData) === 1">
+        <div class="panel-heading breadcrumbHead">
+            <ol class="breadcrumb">
+                <li data-ng-class="{active: isCodingPhase(contest.phaseData)}">1. Coding</li>
+                <li data-ng-class="{active: isIntermissionPhase(contest.phaseData)}">2. Intermission</li>
+                <li data-ng-class="{active: isChallengePhase(contest.phaseData)}">3. Challenge</li>
+                <li data-ng-class="{active: isSystemTestPhase(contest.phaseData)}">4. Sys. Test</li>
+            </ol>
+        </div>
+        <!-- /.tabs -->
+        <div class="panel-body phaseDetails">
+            <!-- /.compStatus -->
+            <div class="compStatus">
+                <div class="column">
+                    <span class="textWhite">Competition Status</span>
+                </div><!-- 
+                avoid unnecessary blank
+                --><div class="column">
+                <span class="textWhite hidden-xs">:</span>
+                <span class="textGreen">{{ getStatus(contest.phaseData) }}</span>
+            </div>
+            </div>
+            <div data-ng-show="isCodingPhase(contest.phaseData) || isIntermissionPhase(contest.phaseData)">
+                <p class="textGray">Select a problem from the problem list:</p>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Points</th>
+                        <th>Problem Title</th>
+                        <th>&nbsp;</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="problem in contest.problems[divisionID] track by $index">
+                        <td>{{ $index + 1 }}</td>
+                        <td class="textGreen textBold">{{ problem.primaryComponent.pointValue }}</td>
+                        <td class="textWhite">{{ problem.name }}</td>
+                        <td><a data-ng-click="openProblem(problem)">Open</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div data-ng-show="isChallengePhase(contest.phaseData) || isSystemTestPhase(contest.phaseData)">
+                <p>Please click View Detail link in Room Summary to do further actions.</p>
+            </div>
+        </div>
+    </div>
+    <!-- end of content for ongoing contest -->
+</div>
